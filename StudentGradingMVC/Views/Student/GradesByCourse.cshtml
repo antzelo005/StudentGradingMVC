@@ -1,0 +1,33 @@
+﻿@model List<StudentGradingMVC.Models.ViewModels.StudentCourseGradeVM>
+@{
+    ViewData["Title"] = "Βαθμοί ανά Μάθημα";
+}
+
+<h2>Βαθμοί ανά Μάθημα</h2>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="alert alert-info">Δεν υπάρχουν δηλωμένα μαθήματα.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Εξάμηνο</th>
+                <th>Μάθημα</th>
+                <th style="width:140px;">Βαθμός</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.Semester</td>
+                    <td>@x.Title</td>
+                    <td>@(x.Grade == null ? "-" : x.Grade)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

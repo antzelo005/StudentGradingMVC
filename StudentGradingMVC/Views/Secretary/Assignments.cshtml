@@ -1,0 +1,33 @@
+﻿@model List<StudentGradingMVC.Models.ViewModels.SecretaryAssignRowVM>
+@{
+    ViewData["Title"] = "Αναθέσεις";
+}
+
+<h2>Αναθέσεις</h2>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="alert alert-info">Δεν υπάρχουν μαθήματα.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Εξάμηνο</th>
+                <th>Μάθημα</th>
+                <th>Καθηγητής</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.Semester</td>
+                    <td>@x.CourseTitle</td>
+                    <td>@x.ProfessorFullName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

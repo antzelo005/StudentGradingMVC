@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Secretary Dashboard";
+}
+
+<div class="page-card">
+    <h2 class="page-title">Secretary Dashboard</h2>
+    <p class="text-muted mb-4">Manage courses, professor assignments, and student enrollments.</p>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="dash-card">
+                <div class="dash-card-title">Courses</div>
+                <div class="dash-card-desc">Create and manage courses and semesters.</div>
+                <a class="btn btn-primary w-100 mt-3" asp-controller="Secretary" asp-action="Courses">
+                    Open
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="dash-card">
+                <div class="dash-card-title">Assignments</div>
+                <div class="dash-card-desc">Assign professors to courses and review assignments.</div>
+                <a class="btn btn-primary w-100 mt-3" asp-controller="Secretary" asp-action="Assignments">
+                    Open
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="dash-card">
+                <div class="dash-card-title">Enrollments</div>
+                <div class="dash-card-desc">Enroll students into courses and view declarations.</div>
+                <a class="btn btn-primary w-100 mt-3" asp-controller="Secretary" asp-action="Enrollments">
+                    Open
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["Msg"] != null)
+    {
+        <div class="alert alert-success mt-4">@TempData["Msg"]</div>
+    }
+    @if (TempData["Err"] != null)
+    {
+        <div class="alert alert-danger mt-4">@TempData["Err"]</div>
+    }
+</div>

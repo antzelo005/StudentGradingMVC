@@ -1,0 +1,90 @@
+﻿@model List<StudentGradingMVC.Models.ViewModels.SecretaryEnrollmentRowVM>
+
+@{
+    ViewData["Title"] = "Enrollments";
+    var students = ViewBag.Students as List<StudentGradingMVC.Models.Student>;
+    var courses = ViewBag.Courses as List<StudentGradingMVC.Models.Course>;
+}
+
+<div class="page-card">
+    <h2 class="page-title">Enrollments</h2>
+    <p class="text-muted">Assign a course to a student (create a new enrollment).</p>
+
+    @if (TempData["Msg"] != null)
+    {
+        <div class="alert alert-success">@TempData["Msg"]</div>
+    }
+    @if (TempData["Err"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Err"]</div>
+    }
+
+    <div class="dash-card mb-4">
+        <div class="dash-card-title mb-2">Add Enrollment</div>
+
+        <form asp-controller="Secretary" asp-action="AddEnrollment" method="post" class="row g-3">
+            @Html.AntiForgeryToken()
+
+            <div class="col-md-5">
+                <label class="form-label">Student</label>
+                <select name="studentId" class="form-select" required>
+                    <option value="" selected disabled>Select student...</option>
+                    @if (students != null)
+                    {
+                        foreach (var s in students)
+                        {
+                            <option value="@s.StudentId">@s.LastName @s.FirstName (@s.Username)</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-5">
+                <label class="form-label">Course</label>
+                <select name="courseId" class="form-select" required>
+                    <option value="" selected disabled>Select course...</option>
+                    @if (courses != null)
+                    {
+                        foreach (var c in courses)
+                        {
+                            <option value="@c.CourseId">Semester @c.Semester — @c.Title</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Assign</button>
+            </div>
+        </form>
+    </div>
+
+    <h5 class="mb-3">Current Enrollments</h5>
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="alert alert-info">No enrollments found.</div>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Semester</th>
+                    <th>Course</th>
+                    <th>Student</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td>@x.Semester</td>
+                        <td>@x.CourseTitle</td>
+                        <td>@x.StudentFullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

@@ -1,0 +1,95 @@
+﻿@model StudentGradingMVC.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - StudentGradingMVC</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body class="auth-body">
+    <div class="auth-wrap">
+        <div class="auth-card">
+            <div class="auth-brand">
+                <div class="auth-logo">SG</div>
+                <div>
+                    <div class="auth-title">StudentGradingMVC</div>
+                    <div class="auth-subtitle">Academic grading & course management</div>
+                </div>
+            </div>
+
+            <h1 class="auth-h1">Sign in</h1>
+            <p class="text-muted mb-4">Use your credentials to access your dashboard.</p>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    Invalid username, password, or role.
+                </div>
+            }
+
+            <form asp-action="Login" method="post" class="auth-form">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input asp-for="Username" class="form-control" autocomplete="username" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" autocomplete="current-password" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Role</label>
+                    <select asp-for="Role" class="form-select">
+                        <option value="Student">Student</option>
+                        <option value="Professor">Professor</option>
+                        <option value="Secretary">Secretary</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 auth-btn">
+                    Login
+                </button>
+
+                <div class="auth-footer">
+                    <span class="text-muted">Demo system • Local database</span>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-side">
+            <div class="auth-side-card">
+                <div class="auth-side-title">Quick Access</div>
+                <div class="auth-side-text">
+                    Students view grades by course/semester.<br />
+                    Professors enter grades.<br />
+                    Secretaries manage courses and enrollments.
+                </div>
+                <div class="auth-side-mini">
+                    <div class="mini-pill">Student</div>
+                    <div class="mini-pill">Professor</div>
+                    <div class="mini-pill">Secretary</div>
+                </div>
+            </div>
+
+            <div class="auth-side-note">
+                Tip: The navbar shows role-based actions after login.
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

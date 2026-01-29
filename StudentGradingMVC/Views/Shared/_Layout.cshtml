@@ -1,0 +1,146 @@
+﻿@{
+    var role = Context.Request.Cookies["UserRole"] ?? "";
+    var username = Context.Request.Cookies["Username"] ?? "";
+}
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    string Active(string c, string a = "")
+        => (controller == c && (string.IsNullOrEmpty(a) || action == a)) ? "active" : "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - StudentGradingMVC</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/StudentGradingMVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm border-bottom mb-4">
+
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    StudentGradingMVC
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        @* ===== STUDENT MENU ===== *@
+                        @if (role == "Student")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @Active(" Student","Index")" asp-controller="Student" asp-action="Index">
+                                    Αρχική Φοιτητή
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Student", "GradesByCourse")" asp-controller="Student" asp-action="GradesByCourse">
+                                    Βαθμοί ανά Μάθημα
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Student", "GradesBySemester")" asp-controller="Student" asp-action="GradesBySemester">
+                                    Βαθμοί ανά Εξάμηνο
+                                </a>
+                            </li>
+                        }
+
+                        @* ===== PROFESSOR MENU ===== *@
+                        @if (role == "Professor")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Professor", "Index")" asp-controller="Professor" asp-action="Index">
+                                    Αρχική Καθηγητή
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Professor", "GradedCourses")" asp-controller="Professor" asp-action="GradedCourses">
+                                    Βαθμολογημένα Μαθήματα
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Professor", "GradeEntry")" asp-controller="Professor" asp-action="GradeEntry">
+                                    Καταχώρηση Βαθμών
+                                </a>
+                            </li>
+                        }
+
+                        @* ===== SECRETARY MENU ===== *@
+                        @if (role == "Secretary")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Secretary", "Index")" asp-controller="Secretary" asp-action="Index">
+                                    Αρχική Γραμματείας
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Secretary", "Courses")" asp-controller="Secretary" asp-action="Courses">
+                                    Μαθήματα
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Secretary", "Assignments")" asp-controller="Secretary" asp-action="Assignments">
+                                    Αναθέσεις
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @Active("Secretary", "Enrollments")" asp-controller="Secretary" asp-action="Enrollments">
+                                    Εγγραφές
+                                </a>
+                            </li>
+
+                        }
+                    </ul>
+
+                    @* ===== RIGHT SIDE (USERNAME + LOGOUT) ===== *@
+                    @if (!string.IsNullOrEmpty(role))
+                    {
+                        <span class="user-pill me-3">
+                            <span class="user-dot"></span>
+                            @username
+                            <span class="role-pill">@role</span>
+                        </span>
+
+
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                Logout
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2026 - StudentGradingMVC
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

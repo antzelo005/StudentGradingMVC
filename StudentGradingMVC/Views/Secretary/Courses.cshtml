@@ -1,0 +1,73 @@
+﻿@model List<StudentGradingMVC.Models.Course>
+@{
+    ViewData["Title"] = "Μαθήματα";
+    var professors = ViewBag.Professors as List<StudentGradingMVC.Models.Professor> ?? new();
+}
+
+<h2>Μαθήματα</h2>
+
+@if (TempData["Err"] != null)
+{
+    <div class="alert alert-danger">@TempData["Err"]</div>
+}
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+
+<h4 class="mt-4">Δημιουργία μαθήματος</h4>
+<form asp-action="CreateCourse" method="post" class="row g-2">
+    @Html.AntiForgeryToken()
+    <div class="col-md-5">
+        <input class="form-control" name="title" placeholder="Τίτλος μαθήματος" />
+    </div>
+    <div class="col-md-2">
+        <input class="form-control" name="semester" type="number" min="1" placeholder="Εξάμηνο" />
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" name="professorId">
+            @foreach (var p in professors)
+            {
+                <option value="@p.ProfessorId">@p.FullName</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">Create</button>
+    </div>
+</form>
+
+<h4 class="mt-4">Λίστα μαθημάτων</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Εξάμηνο</th>
+            <th>Τίτλος</th>
+            <th>Καθηγητής</th>
+            <th style="width:260px;">Αλλαγή Καθηγητή</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Semester</td>
+                <td>@c.Title</td>
+                <td>@c.ProfessorId</td>
+                <td>
+                    <form asp-action="AssignProfessor" method="post" class="d-flex gap-2">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="courseId" value="@c.CourseId" />
+                        <select class="form-select" name="professorId">
+                            @foreach (var p in professors)
+                            {
+                                <option value="@p.ProfessorId">@p.FullName</option>
+                            }
+                        </select>
+                        <button class="btn btn-outline-primary" type="submit">Assign</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

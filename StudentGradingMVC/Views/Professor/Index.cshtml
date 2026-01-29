@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Professor Dashboard";
+}
+
+<div class="page-card">
+    <h2 class="page-title">Professor Dashboard</h2>
+    <p class="text-muted mb-4">Manage grading and view the courses you teach.</p>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="dash-card">
+                <div class="dash-card-title">Grade Entry</div>
+                <div class="dash-card-desc">Select a course and enter/update student grades.</div>
+                <a class="btn btn-success w-100 mt-3" asp-controller="Professor" asp-action="GradeEntry">
+                    Start Grading
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="dash-card">
+                <div class="dash-card-title">Graded Courses</div>
+                <div class="dash-card-desc">View graded courses / overview (if implemented).</div>
+                <a class="btn btn-outline-secondary w-100 mt-3" asp-controller="Professor" asp-action="GradedCourses">
+                    Open
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info mt-4 mb-0">
+        Tip: Use <strong>Grade Entry</strong> to update grades. Students will instantly see updates.
+    </div>
+</div>

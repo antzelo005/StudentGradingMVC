@@ -1,0 +1,40 @@
+﻿@model List<StudentGradingMVC.Models.ViewModels.ProfessorCourseOptionVM>
+@{
+    ViewData["Title"] = "Graded Courses";
+}
+
+<h2>Graded Courses</h2>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="alert alert-info">No courses found.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Semester</th>
+                <th>Course</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.Semester</td>
+                    <td>@c.Title</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-controller="Professor"
+                           asp-action="GradeEntryForm"
+                           asp-route-courseId="@c.CourseId">
+                            View / Edit Grades
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var role = Context.Request.Cookies["UserRole"] ?? "";
+}
+
+@if (!string.IsNullOrWhiteSpace(role))
+{
+    if (role == "Student")
+    {
+        <script>window.location.href = '/Student/Index';</script>
+    }
+    else if (role == "Professor")
+    {
+        <script>window.location.href = '/Professor/Index';</script>
+    }
+    else if (role == "Secretary")
+    {
+        <script>window.location.href = '/Secretary/Index';</script>
+    }
+}
+
+<div class="page-card">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <h1 class="home-hero-title">StudentGradingMVC</h1>
+            <p class="home-hero-subtitle">
+                A simple academic grading & course management system built with ASP.NET Core MVC and SQL Server.
+            </p>
+
+            <div class="d-flex gap-2 mt-4">
+                <a class="btn btn-primary btn-lg" asp-controller="Account" asp-action="Login">
+                    Login
+                </a>
+                <a class="btn btn-outline-secondary btn-lg" asp-controller="Home" asp-action="Privacy">
+                    About
+                </a>
+            </div>
+
+            <div class="home-badges mt-4">
+                <span class="home-badge">Role-based access</span>
+                <span class="home-badge">EF Core + SQL Server</span>
+                <span class="home-badge">MVC Architecture</span>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="home-feature-card">
+                <div class="home-feature-title">What you can do</div>
+
+                <div class="home-feature-item">
+                    <div class="home-icon">🎓</div>
+                    <div>
+                        <div class="home-feature-item-title">Students</div>
+                        <div class="home-feature-item-text">View grades by course, semester and overall average.</div>
+                    </div>
+                </div>
+
+                <div class="home-feature-item">
+                    <div class="home-icon">🧑‍🏫</div>
+                    <div>
+                        <div class="home-feature-item-title">Professors</div>
+                        <div class="home-feature-item-text">Enter grades for enrolled students per course.</div>
+                    </div>
+                </div>
+
+                <div class="home-feature-item">
+                    <div class="home-icon">🗂️</div>
+                    <div>
+                        <div class="home-feature-item-title">Secretary</div>
+                        <div class="home-feature-item-text">Manage courses, assignments and enrollments.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

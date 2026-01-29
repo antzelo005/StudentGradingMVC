@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<div class="page-card">
+    <h2 class="page-title">About StudentGradingMVC</h2>
+
+    <p class="text-muted">
+        StudentGradingMVC is an academic course grading and management system
+        developed as part of a university project using ASP.NET Core MVC.
+    </p>
+
+    <hr />
+
+    <h5>Features</h5>
+    <ul>
+        <li>Role-based authentication (Student, Professor, Secretary)</li>
+        <li>Grade entry and viewing per course and semester</li>
+        <li>Course, enrollment, and professor assignment management</li>
+        <li>Entity Framework Core with SQL Server</li>
+    </ul>
+
+    <h5 class="mt-4">Architecture</h5>
+    <p>
+        The application follows the MVC (Model–View–Controller) pattern
+        and uses cookie-based authentication for educational purposes.
+    </p>
+
+    <h5 class="mt-4">Disclaimer</h5>
+    <p class="text-muted">
+        This system is intended for academic demonstration only and is not
+        designed for production use.
+    </p>
+
+    <div class="mt-4">
+        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">
+            Back to Home
+        </a>
+    </div>
+</div>
