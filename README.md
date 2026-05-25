@@ -101,13 +101,17 @@ The application seeds a small dataset on startup for development use.
 | `prof1` | `1234` | `Professor` |
 | `sec1` | `1234` | `Secretary` |
 
-## Suggested Screenshots
+## Screenshots
 
-Keep screenshots minimal and presentation-oriented.
 
-- `(Login page with role selector and branded header)`
-- `(Professor grade entry screen showing a course roster and editable grade fields)`
-- `(Secretary dashboard or courses screen showing course management actions)`
+- Login page with role selector and branded header
+  <img width="1609" height="814" alt="image" src="https://github.com/user-attachments/assets/e02c0a58-a389-4d6d-844d-633b8b61df8b" />
+
+- Professor grade entry screen showing a course roster and editable grade fields)
+  <img width="1840" height="720" alt="image" src="https://github.com/user-attachments/assets/015cd048-19fc-4e0b-9800-d7554dd8ac2f" />
+
+- Secretary dashboard or courses screen showing course management actions
+  <img width="1854" height="912" alt="image" src="https://github.com/user-attachments/assets/35aabf07-3654-40bd-aed0-b55bd91f978e" />
 
 ## Notes
 
