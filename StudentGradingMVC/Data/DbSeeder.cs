@@ -6,11 +6,11 @@ namespace StudentGradingMVC.Data
     {
         public static void Seed(StudentGradingContext db)
         {
-            // Αν έχει ήδη δεδομένα, μην ξανασπείρεις
+            // Skip seeding if core data already exists.
             if (db.Users.Any() || db.Students.Any() || db.Professors.Any() || db.Courses.Any())
                 return;
 
-            // Users (για login)
+            // Users for login
             db.Users.AddRange(
                 new User { Username = "stud1", Password = "1234", Role = "Student" },
                 new User { Username = "stud2", Password = "1234", Role = "Student" },
@@ -39,7 +39,7 @@ namespace StudentGradingMVC.Data
 
             db.Students.AddRange(s1, s2);
 
-            db.SaveChanges(); // για να πάρουν IDs
+            db.SaveChanges(); // Persist first so IDs are available.
 
             // Courses
             var c1 = new Course { Title = "Data Bases", Semester = 3, ProfessorId = prof.ProfessorId };
@@ -48,7 +48,7 @@ namespace StudentGradingMVC.Data
 
             db.SaveChanges();
 
-            // Enrollments (δηλώσεις)
+            // Enrollments
             db.Enrollments.AddRange(
                 new Enrollment { StudentId = s1.StudentId, CourseId = c1.CourseId },
                 new Enrollment { StudentId = s2.StudentId, CourseId = c1.CourseId },
@@ -57,7 +57,7 @@ namespace StudentGradingMVC.Data
 
             db.SaveChanges();
 
-            // Προαιρετικά: 1-2 έτοιμοι βαθμοί
+            // Optional starter grades
             db.Grades.AddRange(
                 new Grade { StudentId = s1.StudentId, CourseId = c1.CourseId, Value = 8.5m }
             );

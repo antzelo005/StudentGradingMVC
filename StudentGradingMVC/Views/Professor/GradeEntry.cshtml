@@ -1,13 +1,13 @@
 ﻿@model StudentGradingMVC.Models.ViewModels.ProfessorGradeEntrySelectCourseVM
 @{
-    ViewData["Title"] = "Καταχώρηση Βαθμών";
+    ViewData["Title"] = "Grade Entry";
 }
 
-<h2 class="mb-3">Καταχώρηση Βαθμών</h2>
+<h2 class="mb-3">Grade Entry</h2>
 
 @if (Model.Courses == null || Model.Courses.Count == 0)
 {
-    <div class="alert alert-warning">Δεν υπάρχουν διαθέσιμα μαθήματα.</div>
+    <div class="alert alert-warning">No courses are currently available.</div>
 }
 else
 {
@@ -20,7 +20,7 @@ else
                asp-route-courseId="@c.CourseId">
                 <div class="d-flex justify-content-between">
                     <strong>@c.Title</strong>
-                    <span class="text-muted">Εξάμηνο: @c.Semester</span>
+                    <span class="text-muted">Semester: @c.Semester</span>
                 </div>
             </a>
         }

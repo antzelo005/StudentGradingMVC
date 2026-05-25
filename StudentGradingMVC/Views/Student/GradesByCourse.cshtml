@@ -1,22 +1,22 @@
 ﻿@model List<StudentGradingMVC.Models.ViewModels.StudentCourseGradeVM>
 @{
-    ViewData["Title"] = "Βαθμοί ανά Μάθημα";
+    ViewData["Title"] = "Grades by Course";
 }
 
-<h2>Βαθμοί ανά Μάθημα</h2>
+<h2>Grades by Course</h2>
 
 @if (Model == null || Model.Count == 0)
 {
-    <div class="alert alert-info">Δεν υπάρχουν δηλωμένα μαθήματα.</div>
+    <div class="alert alert-info">There are no enrolled courses.</div>
 }
 else
 {
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Εξάμηνο</th>
-                <th>Μάθημα</th>
-                <th style="width:140px;">Βαθμός</th>
+                <th>Semester</th>
+                <th>Course</th>
+                <th style="width:140px;">Grade</th>
             </tr>
         </thead>
         <tbody>

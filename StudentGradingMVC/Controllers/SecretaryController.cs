@@ -37,14 +37,14 @@ namespace StudentGradingMVC.Controllers
             title = (title ?? "").Trim();
             if (string.IsNullOrWhiteSpace(title) || semester <= 0)
             {
-                TempData["Err"] = "Συμπλήρωσε σωστά τίτλο/εξάμηνο.";
+                TempData["Err"] = "Enter a valid course title and semester.";
                 return RedirectToAction("Courses");
             }
 
             var profExists = _context.Professors.Any(p => p.ProfessorId == professorId);
             if (!profExists)
             {
-                TempData["Err"] = "Δεν βρέθηκε καθηγητής.";
+                TempData["Err"] = "Professor not found.";
                 return RedirectToAction("Courses");
             }
 
@@ -56,7 +56,7 @@ namespace StudentGradingMVC.Controllers
             });
 
             _context.SaveChanges();
-            TempData["Msg"] = "Το μάθημα δημιουργήθηκε.";
+            TempData["Msg"] = "Course created successfully.";
             return RedirectToAction("Courses");
         }
 
@@ -70,21 +70,21 @@ namespace StudentGradingMVC.Controllers
             var course = _context.Courses.FirstOrDefault(c => c.CourseId == courseId);
             if (course == null)
             {
-                TempData["Err"] = "Δεν βρέθηκε μάθημα.";
+                TempData["Err"] = "Course not found.";
                 return RedirectToAction("Courses");
             }
 
             var profExists = _context.Professors.Any(p => p.ProfessorId == professorId);
             if (!profExists)
             {
-                TempData["Err"] = "Δεν βρέθηκε καθηγητής.";
+                TempData["Err"] = "Professor not found.";
                 return RedirectToAction("Courses");
             }
 
             course.ProfessorId = professorId;
             _context.SaveChanges();
 
-            TempData["Msg"] = "Έγινε ανάθεση καθηγητή.";
+            TempData["Msg"] = "Professor assignment updated.";
             return RedirectToAction("Courses");
         }
 
@@ -132,14 +132,14 @@ namespace StudentGradingMVC.Controllers
             var exists = _context.Enrollments.Any(e => e.StudentId == studentId && e.CourseId == courseId);
             if (exists)
             {
-                TempData["Err"] = "Ο φοιτητής είναι ήδη δηλωμένος σε αυτό το μάθημα.";
+                TempData["Err"] = "The student is already enrolled in this course.";
                 return RedirectToAction("Enrollments");
             }
 
             _context.Enrollments.Add(new Enrollment { StudentId = studentId, CourseId = courseId });
             _context.SaveChanges();
 
-            TempData["Msg"] = "Η δήλωση μαθήματος καταχωρήθηκε.";
+            TempData["Msg"] = "Enrollment created successfully.";
             return RedirectToAction("Enrollments");
         }
 

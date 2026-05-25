@@ -53,7 +53,7 @@ namespace StudentGradingMVC.Controllers
             {
                 HttpOnly = true,
                 SameSite = SameSiteMode.Lax,
-                Secure = Request.IsHttps,   // <- ΠΟΛΥ σημαντικό για localhost
+                Secure = Request.IsHttps,   // Important for localhost
                 Expires = DateTimeOffset.UtcNow.AddHours(2)
             };
 

@@ -1,10 +1,10 @@
 ﻿@model List<StudentGradingMVC.Models.Course>
 @{
-    ViewData["Title"] = "Μαθήματα";
+    ViewData["Title"] = "Courses";
     var professors = ViewBag.Professors as List<StudentGradingMVC.Models.Professor> ?? new();
 }
 
-<h2>Μαθήματα</h2>
+<h2>Courses</h2>
 
 @if (TempData["Err"] != null)
 {
@@ -15,14 +15,14 @@
     <div class="alert alert-success">@TempData["Msg"]</div>
 }
 
-<h4 class="mt-4">Δημιουργία μαθήματος</h4>
+<h4 class="mt-4">Create Course</h4>
 <form asp-action="CreateCourse" method="post" class="row g-2">
     @Html.AntiForgeryToken()
     <div class="col-md-5">
-        <input class="form-control" name="title" placeholder="Τίτλος μαθήματος" />
+        <input class="form-control" name="title" placeholder="Course title" />
     </div>
     <div class="col-md-2">
-        <input class="form-control" name="semester" type="number" min="1" placeholder="Εξάμηνο" />
+        <input class="form-control" name="semester" type="number" min="1" placeholder="Semester" />
     </div>
     <div class="col-md-3">
         <select class="form-select" name="professorId">
@@ -37,14 +37,14 @@
     </div>
 </form>
 
-<h4 class="mt-4">Λίστα μαθημάτων</h4>
+<h4 class="mt-4">Course List</h4>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Εξάμηνο</th>
-            <th>Τίτλος</th>
-            <th>Καθηγητής</th>
-            <th style="width:260px;">Αλλαγή Καθηγητή</th>
+            <th>Semester</th>
+            <th>Title</th>
+            <th>Professor</th>
+            <th style="width:260px;">Change Professor</th>
         </tr>
     </thead>
     <tbody>

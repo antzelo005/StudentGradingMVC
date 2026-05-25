@@ -1,10 +1,10 @@
 ﻿@model StudentGradingMVC.Models.ViewModels.ProfessorGradeEntryVM
 @{
-    ViewData["Title"] = "Καταχώρηση Βαθμών";
+    ViewData["Title"] = "Grade Entry";
 }
 
 <h2 class="mb-1">@Model.CourseTitle</h2>
-<div class="text-muted mb-3">Εξάμηνο: @Model.CourseSemester</div>
+<div class="text-muted mb-3">Semester: @Model.CourseSemester</div>
 
 @if (TempData["Msg"] != null)
 {
@@ -19,8 +19,8 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Φοιτητής</th>
-                <th style="width: 180px;">Βαθμός (0-10)</th>
+                <th>Student</th>
+                <th style="width: 180px;">Grade (0-10)</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
                         <input type="hidden" asp-for="Rows[i].StudentName" />
                     </td>
                     <td>
-                        <input class="form-control" asp-for="Rows[i].Grade" placeholder="π.χ. 8.5" />
+                        <input class="form-control" asp-for="Rows[i].Grade" placeholder="e.g. 8.5" />
                         <span class="text-danger" asp-validation-for="Rows[i].Grade"></span>
                     </td>
                 </tr>
@@ -42,8 +42,8 @@
     </table>
 
     <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Αποθήκευση</button>
-        <a class="btn btn-outline-secondary" asp-action="GradeEntry">Πίσω</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-outline-secondary" asp-action="GradeEntry">Back</a>
     </div>
 </form>
 

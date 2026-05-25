@@ -1,15 +1,15 @@
 ﻿@model decimal?
 @{
-    ViewData["Title"] = "Συνολική Βαθμολογία";
+    ViewData["Title"] = "Overall Grade";
 }
 
-<h2>Συνολική Βαθμολογία</h2>
+<h2>Overall Grade</h2>
 
 @if (Model == null)
 {
-    <div class="alert alert-info">Δεν υπάρχει ακόμα κανένας καταχωρημένος βαθμός.</div>
+    <div class="alert alert-info">No grades have been recorded yet.</div>
 }
 else
 {
-    <div class="alert alert-success">Μέσος Όρος: <strong>@Model</strong></div>
+    <div class="alert alert-success">Average: <strong>@Model</strong></div>
 }

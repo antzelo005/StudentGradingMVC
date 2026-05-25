@@ -22,15 +22,15 @@ namespace StudentGradingMVC.Controllers
         }
 
         // =========================
-        // STEP 1: Επιλογή μαθήματος
+        // STEP 1: Course selection
         // =========================
         [HttpGet]
         public IActionResult GradeEntry()
         {
             var username = Request.Cookies["Username"];
 
-            // TODO: Αν έχεις ProfessorId απευθείας στο User, άλλαξε εδώ αντίστοιχα.
-            // Υποθέτω: υπάρχει Professors table και User έχει Username που αντιστοιχεί σε Professor record.
+            // TODO: If ProfessorId exists directly on User, update this lookup accordingly.
+            // Assumption: there is a Professors table and User.Username matches a Professor record.
             var professor = _context.Professors
                 .AsNoTracking()
                 .FirstOrDefault(p => p.Username == username);
@@ -60,7 +60,7 @@ namespace StudentGradingMVC.Controllers
         }
 
         // =========================
-        // STEP 2: Φόρμα βαθμολόγησης
+        // STEP 2: Grading form
         // =========================
         [HttpGet]
         public IActionResult GradeEntryForm(int courseId)
@@ -80,12 +80,12 @@ namespace StudentGradingMVC.Controllers
             if (course == null)
                 return NotFound();
 
-            // Security: ο professor πρέπει να έχει αυτό το course
+            // Security: the professor must own this course
             if (course.ProfessorId != professor.ProfessorId)
                 return RedirectToAction("GradeEntry");
 
-            // Παίρνουμε τους φοιτητές που έχουν δηλώσει το μάθημα (Enrollments/Declarations)
-            // Υποθέτω: Enrollments(StudentId, CourseId) και Students(StudentId, FirstName, LastName)
+            // Get the students enrolled in this course.
+            // Assumption: Enrollments(StudentId, CourseId) and Students(StudentId, FirstName, LastName)
             var declared = _context.Enrollments
                 .AsNoTracking()
                 .Where(e => e.CourseId == courseId)
@@ -107,7 +107,7 @@ namespace StudentGradingMVC.Controllers
                 })
                 .ToList();
 
-            // Υποθέτω: Grades(StudentId, CourseId, Value)
+            // Assumption: Grades(StudentId, CourseId, Value)
             var existingGrades = _context.Grades
                 .AsNoTracking()
                 .Where(g => g.CourseId == courseId && studentIds.Contains(g.StudentId))
@@ -142,7 +142,7 @@ namespace StudentGradingMVC.Controllers
             if (professor == null)
                 return RedirectToAction("Login", "Account");
 
-            // Μαθήματα που έχει ο professor (και προαιρετικά να δείχνεις αν υπάρχουν βαθμοί)
+            // Courses assigned to the professor.
             var rows = _context.Courses
                 .AsNoTracking()
                 .Where(c => c.ProfessorId == professor.ProfessorId)
@@ -166,7 +166,7 @@ namespace StudentGradingMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GradeEntryForm(ProfessorGradeEntryVM model)
         {
-            // server-side validation (0-10 κλπ)
+            // Server-side validation for the grade range and required fields.
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -187,14 +187,14 @@ namespace StudentGradingMVC.Controllers
             if (course.ProfessorId != professor.ProfessorId)
                 return RedirectToAction("GradeEntry");
 
-            // Φόρτωση υπαρχόντων βαθμών για αυτό το course
+            // Load existing grades for this course.
             var existing = _context.Grades
                 .Where(g => g.CourseId == model.CourseId)
                 .ToList();
 
             foreach (var row in model.Rows)
             {
-                // αν δεν έβαλε βαθμό -> skip
+                // Skip rows without a grade.
                 if (row.Grade == null) continue;
 
                 var grade = existing.FirstOrDefault(g => g.StudentId == row.StudentId);
@@ -217,7 +217,7 @@ namespace StudentGradingMVC.Controllers
 
             _context.SaveChanges();
 
-            TempData["Msg"] = "✅ Οι βαθμοί αποθηκεύτηκαν!";
+            TempData["Msg"] = "Grades were saved successfully.";
             return RedirectToAction("GradeEntryForm", new { courseId = model.CourseId });
         }
     }
